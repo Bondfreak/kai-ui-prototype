@@ -5,259 +5,54 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <title>KAI UI v0.2 Prototype</title>
 <style>
-:root{
-  --bg:#07111f; --panel:#0d1a2b; --panel2:#112238; --line:#223a55; --text:#eef6ff;
-  --muted:#8fa7c2; --cyan:#1cc8d7; --green:#38d39f; --orange:#ffb253; --red:#ff7272;
-  --blue:#5da6ff; --purple:#a78bfa;
-}
-*{box-sizing:border-box}
-body{margin:0;background:#020711;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+:root{--bg:#07111f;--panel:#0d1a2b;--panel2:#112238;--line:#223a55;--text:#eef6ff;--muted:#8fa7c2;--cyan:#1cc8d7;--green:#38d39f;--orange:#ffb253}
+*{box-sizing:border-box} body{margin:0;background:#020711;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .app{width:100vw;height:100vh;display:grid;grid-template-columns:88px 1fr;grid-template-rows:76px 1fr 72px;overflow:hidden;background:radial-gradient(circle at 55% 20%,#10233a 0,#07111f 44%,#040a13 100%)}
-.sidebar{grid-row:1/4;background:#07101c;border-right:1px solid #15273b;display:flex;flex-direction:column;align-items:center;padding:14px 8px;gap:10px}
-.logo{width:54px;height:54px;border-radius:14px;background:linear-gradient(145deg,#09253e,#0f3e59);display:grid;place-items:center;font-weight:800;letter-spacing:.04em;color:#c8fbff;margin-bottom:8px;border:1px solid #1c6681}
-.navbtn{width:58px;height:56px;border:0;border-radius:14px;background:transparent;color:#8ea8c3;font-size:12px;display:grid;place-items:center;gap:2px;cursor:pointer}
-.navbtn span{font-size:20px}.navbtn.active,.navbtn:hover{background:#0e2237;color:white}
-.header{grid-column:2;display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:1px solid #18304a;background:rgba(7,17,31,.88);backdrop-filter:blur(12px)}
-.brand{display:flex;align-items:center;gap:14px}
-.boat-thumb{width:78px;height:48px;border-radius:12px;overflow:hidden;border:1px solid #294965;background:#0e1b29}
-.boat-thumb img{width:100%;height:100%;object-fit:cover}
-.brand h1{font-size:20px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
-.statusline{display:flex;gap:10px;align-items:center}
-.pill{padding:8px 11px;border:1px solid #274761;border-radius:999px;color:#bcd2e7;font-size:12px;background:#0a1828}
-.pill.ok{color:#baffdf;border-color:#245841}.dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--green);margin-right:6px}
-
-.main{grid-column:2;display:grid;grid-template-rows:112px 1fr;padding:14px 18px;gap:12px;min-height:0}
-.specialists{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.card{background:linear-gradient(180deg,rgba(17,34,56,.98),rgba(10,24,40,.98));border:1px solid #213d59;border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.18)}
-.spec{padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.15s}
-.spec:hover{transform:translateY(-1px);border-color:#3e6f98}.spec.focus{border-color:var(--cyan);box-shadow:0 0 0 1px rgba(28,200,215,.2),0 8px 30px rgba(28,200,215,.08)}
-.icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#0b2a3f;font-size:22px}.spec:nth-child(2) .icon{background:#29224d}.spec:nth-child(3) .icon{background:#1f392f}.spec:nth-child(4) .icon{background:#3a2a1f}
-.spec h3{margin:0;font-size:15px}.spec p{margin:3px 0 0;color:var(--muted);font-size:11px}.ready{margin-left:auto;color:#70e3b0;font-size:11px}
-
-.workspace{display:grid;grid-template-columns:1.35fr .85fr;gap:12px;min-height:0}
-.visual{position:relative;overflow:hidden;min-height:0}
-.visual img{width:100%;height:100%;object-fit:cover;opacity:.88}
-.visual:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,13,24,.1),rgba(5,13,24,.35)),linear-gradient(0deg,rgba(5,13,24,.5),transparent 45%)}
-.overlay-title{position:absolute;z-index:3;left:18px;top:16px;background:rgba(5,15,25,.78);padding:10px 12px;border-radius:12px;border:1px solid #294966}
-.overlay-title b{display:block}.overlay-title small{color:#a9c0d5}
-.metrics{position:absolute;z-index:3;left:16px;right:16px;bottom:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.metric{background:rgba(5,15,26,.85);border:1px solid #284761;border-radius:12px;padding:10px}.metric b{display:block;font-size:15px}.metric small{color:#9fb5ca;font-size:10px}
-
-.sidepanel{padding:18px;display:flex;flex-direction:column;min-height:0}
-.kai-title{display:flex;justify-content:space-between;align-items:center}.kai-title h2{margin:0;font-size:18px}.confidence{font-size:11px;color:#a8d6ff}
-.summary{font-size:14px;line-height:1.45;margin:14px 0 12px}
-.section{border-top:1px solid #1e3851;padding-top:12px;margin-top:8px}
-.section h4{margin:0 0 8px;font-size:12px;color:#b9d0e3;text-transform:uppercase;letter-spacing:.06em}
-.row{display:flex;justify-content:space-between;gap:12px;font-size:12px;padding:6px 0;color:#d8e5f2}.row span:last-child{color:#9fb9d2}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}
-.btn{border:1px solid #315873;background:#10253b;color:#eaf6ff;border-radius:12px;padding:11px 10px;font-weight:650;cursor:pointer}.btn.primary{background:linear-gradient(180deg,#0e6e7e,#0a5362);border-color:#17889c}.btn.warn{background:#382516;border-color:#74471d}.btn.danger{background:#3a171a;border-color:#783037}
-
-.composer{grid-column:2;border-top:1px solid #18304a;background:#07101c;display:grid;grid-template-columns:1fr auto;align-items:center;padding:10px 18px;gap:10px}
-.inputwrap{display:flex;align-items:center;background:#0d1b2c;border:1px solid #29465f;border-radius:16px;padding:0 12px}
-.inputwrap input{flex:1;background:transparent;border:0;outline:0;color:#fff;padding:15px 8px;font-size:14px}
-.quick{display:flex;gap:8px}.quick button{background:#0e2237;border:1px solid #294862;color:#bcd5ea;border-radius:12px;padding:12px 14px;cursor:pointer}
-.send{background:#0d6e7d!important;color:#fff!important}
-
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:20;align-items:center;justify-content:center;padding:40px}
-.modal.show{display:flex}.modal-card{width:min(840px,90vw);max-height:82vh;overflow:auto;background:#0b1727;border:1px solid #315574;border-radius:20px;padding:22px;box-shadow:0 30px 100px rgba(0,0,0,.5)}
-.modal h2{margin-top:0}.docbox{background:#f7f9fc;color:#1f2a36;border-radius:14px;padding:24px;min-height:260px}.docbox h3{margin-top:0}.close{float:right}
-
-.badge{font-size:10px;padding:4px 8px;border-radius:999px;border:1px solid #35526e;color:#a9c4da}
-.badge.alert{color:#ffd6a6;border-color:#714d23}.badge.good{color:#baf3dc;border-color:#245842}
-.hidden{display:none!important}
-
-@media (max-width:1000px){
-  .app{grid-template-columns:72px 1fr}.workspace{grid-template-columns:1.2fr .8fr}.specialists{grid-template-columns:repeat(2,1fr);grid-auto-rows:70px}.main{grid-template-rows:150px 1fr}.spec{padding:10px}.spec p{display:none}.metric:nth-child(4){display:none}.metrics{grid-template-columns:repeat(3,1fr)}
-}
+.sidebar{grid-row:1/4;background:#07101c;border-right:1px solid #15273b;display:flex;flex-direction:column;align-items:center;padding:14px 8px;gap:10px}.logo{width:54px;height:54px;border-radius:14px;background:linear-gradient(145deg,#09253e,#0f3e59);display:grid;place-items:center;font-weight:800;color:#c8fbff;margin-bottom:8px;border:1px solid #1c6681}.navbtn{width:58px;height:56px;border:0;border-radius:14px;background:transparent;color:#8ea8c3;font-size:12px;display:grid;place-items:center;cursor:pointer}.navbtn span{font-size:20px}.navbtn.active,.navbtn:hover{background:#0e2237;color:white}
+.header{grid-column:2;display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:1px solid #18304a;background:rgba(7,17,31,.88)}.brand{display:flex;align-items:center;gap:14px}.boat-thumb{width:78px;height:48px;border-radius:12px;border:1px solid #294965;background:#0e1b29;display:grid;place-items:center;font-size:28px}.brand h1{font-size:20px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.statusline{display:flex;gap:10px}.pill{padding:8px 11px;border:1px solid #274761;border-radius:999px;color:#bcd2e7;font-size:12px;background:#0a1828}.pill.ok{color:#baffdf;border-color:#245841}
+.main{grid-column:2;display:grid;grid-template-rows:112px 1fr;padding:14px 18px;gap:12px;min-height:0}.specialists{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:linear-gradient(180deg,rgba(17,34,56,.98),rgba(10,24,40,.98));border:1px solid #213d59;border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.spec{padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer}.spec.focus{border-color:var(--cyan);box-shadow:0 0 0 1px rgba(28,200,215,.2)}.icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#0b2a3f;font-size:22px}.spec h3{margin:0;font-size:15px}.spec p{margin:3px 0 0;color:var(--muted);font-size:11px}.ready{margin-left:auto;color:#70e3b0;font-size:11px}
+.workspace{display:grid;grid-template-columns:1.35fr .85fr;gap:12px;min-height:0}.visual{position:relative;overflow:hidden;min-height:0}.engine-art{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(145deg,#0d2338,#061320)}.engines{display:flex;gap:70px;align-items:center}.engine{width:235px;height:225px;border-radius:28px;background:linear-gradient(145deg,#213c4e,#112737);border:1px solid #365b73;display:grid;place-items:center;box-shadow:inset 0 0 30px rgba(255,255,255,.03)}.engine b{font-size:30px}.engine span{color:#a9c0d5}.overlay-title{position:absolute;z-index:4;left:18px;top:16px;background:rgba(5,15,25,.82);padding:10px 12px;border-radius:12px;border:1px solid #294966}.overlay-title b{display:block}.overlay-title small{color:#a9c0d5}.metrics{position:absolute;z-index:4;left:16px;right:16px;bottom:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.metric{background:rgba(5,15,26,.88);border:1px solid #284761;border-radius:12px;padding:10px}.metric b{display:block;font-size:15px}.metric small{color:#9fb5ca;font-size:10px}
+.doclayer{display:none;position:absolute;z-index:3;inset:0;padding:18px;background:#0a1726}.visual.docmode .engine-art,.visual.docmode .metrics,.visual.docmode .overlay-title{display:none}.visual.docmode .doclayer{display:flex;flex-direction:column}.dochead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.dochead h3{margin:0}.docmeta{font-size:11px;color:#9fb5ca}.docpage{background:#f7f9fc;color:#1f2a36;border-radius:14px;padding:20px;overflow:auto;flex:1}.docpage h3{margin-top:0}.evidence-tag{display:inline-block;padding:5px 8px;border-radius:999px;background:#e8f5ee;color:#235d45;font-size:11px;font-weight:700}.inlineclose{border:1px solid #315873;background:#10253b;color:#eaf6ff;border-radius:10px;padding:8px 11px;cursor:pointer}
+.sidepanel{padding:18px;display:flex;flex-direction:column;min-height:0}.kai-title{display:flex;justify-content:space-between;align-items:center}.kai-title h2{margin:0;font-size:18px}.summary{font-size:14px;line-height:1.45;margin:14px 0 12px}.section{border-top:1px solid #1e3851;padding-top:12px;margin-top:8px}.section h4{margin:0 0 8px;font-size:12px;color:#b9d0e3;text-transform:uppercase}.row{display:flex;justify-content:space-between;gap:12px;font-size:12px;padding:6px 0}.row span:last-child{color:#9fb9d2}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}.btn{border:1px solid #315873;background:#10253b;color:#eaf6ff;border-radius:12px;padding:11px 10px;font-weight:650;cursor:pointer}.btn.primary{background:linear-gradient(180deg,#0e6e7e,#0a5362);border-color:#17889c}.badge{font-size:10px;padding:4px 8px;border-radius:999px;border:1px solid #35526e;color:#a9c4da}.badge.alert{color:#ffd6a6;border-color:#714d23}.badge.good{color:#baf3dc;border-color:#245842}
+.composer{grid-column:2;border-top:1px solid #18304a;background:#07101c;display:grid;grid-template-columns:1fr auto;align-items:center;padding:10px 18px;gap:10px}.inputwrap{display:flex;align-items:center;background:#0d1b2c;border:1px solid #29465f;border-radius:16px;padding:0 12px}.inputwrap input{flex:1;background:transparent;border:0;outline:0;color:#fff;padding:15px 8px;font-size:14px}.quick{display:flex;gap:8px}.quick button{background:#0e2237;border:1px solid #294862;color:#bcd5ea;border-radius:12px;padding:12px 14px;cursor:pointer}.send{background:#0d6e7d!important;color:#fff!important}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:20;align-items:center;justify-content:center;padding:40px}.modal.show{display:flex}.modal-card{width:min(760px,90vw);background:#0b1727;border:1px solid #315574;border-radius:20px;padding:22px}.modal-card h2{margin-top:0}
+@media(max-width:1000px){.app{grid-template-columns:72px 1fr}.workspace{grid-template-columns:1.2fr .8fr}.specialists{grid-template-columns:repeat(2,1fr);grid-auto-rows:70px}.main{grid-template-rows:150px 1fr}.spec{padding:10px}.spec p{display:none}.metric:nth-child(4){display:none}.metrics{grid-template-columns:repeat(3,1fr)}.engines{gap:28px}.engine{width:180px;height:190px}}
 </style>
 </head>
 <body>
 <div class="app">
-  <aside class="sidebar">
-    <div class="logo">KAI</div>
-    <button class="navbtn active" onclick="setState('normal')"><span>⌂</span>Hjem</button>
-    <button class="navbtn" onclick="setState('trouble')"><span>⚙</span>Motor</button>
-    <button class="navbtn" onclick="setState('multi')"><span>◫</span>Analyse</button>
-    <button class="navbtn" onclick="openDoc()"><span>▤</span>Dokument</button>
-    <button class="navbtn" onclick="setState('approval')"><span>✓</span>Approval</button>
-  </aside>
-
-  <header class="header">
-    <div class="brand">
-      <div class="boat-thumb"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 100'><rect width='160' height='100' fill='%23091524'/><path d='M18 62h115l-16 17H43z' fill='white'/><path d='M54 41h47l18 20H44z' fill='%23cfd8e5'/><rect x='62' y='30' width='42' height='12' rx='3' fill='white'/><rect x='67' y='33' width='9' height='7' fill='%230a2033'/><rect x='80' y='33' width='9' height='7' fill='%230a2033'/><rect x='93' y='33' width='8' height='7' fill='%230a2033'/><path d='M0 82c25-8 43 7 66 0s40-4 59 1 30 0 35-2v19H0z' fill='%230b5974'/></svg>"/></div>
-      <div><h1>S/Y Shaka · KAI</h1><p>Nord West 370 · Øresund · Generic Bot UI v0.2</p></div>
-    </div>
-    <div class="statusline">
-      <div class="pill ok"><span class="dot"></span>System normal</div>
-      <div class="pill">🌤 18°C · 4 m/s</div>
-      <div class="pill">🔋 82%</div>
-    </div>
-  </header>
-
-  <main class="main">
-    <section class="specialists">
-      <div class="card spec focus" id="spec-penta" onclick="focusSpec('penta')"><div class="icon">⚙️</div><div><h3>PentaBot</h3><p>Volvo Penta · EVC · IPS</p></div><div class="ready">● klar</div></div>
-      <div class="card spec" id="spec-økonomi" onclick="focusSpec('økonomi')"><div class="icon">▥</div><div><h3>RegnskabsBot</h3><p>Fakturaer · budget · omkostning</p></div><div class="ready">● klar</div></div>
-      <div class="card spec" id="spec-dokument" onclick="focusSpec('dokument')"><div class="icon">▤</div><div><h3>DokumentBot</h3><p>Manualer · KO · EPC</p></div><div class="ready">● klar</div></div>
-      <div class="card spec" id="spec-plan" onclick="focusSpec('plan')"><div class="icon">☑</div><div><h3>PlanlægningsBot</h3><p>Service · checklister · næste skridt</p></div><div class="ready">● klar</div></div>
-    </section>
-
-    <section class="workspace">
-      <div class="card visual">
-        <img id="hero" alt="KAI visual" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='%230d2338'/><stop offset='1' stop-color='%23061320'/></linearGradient></defs><rect width='1200' height='700' fill='url(%23g)'/><ellipse cx='600' cy='560' rx='420' ry='55' fill='%23030b13'/><g transform='translate(170 130)'><rect x='0' y='110' width='330' height='240' rx='30' fill='%231a303f'/><rect x='54' y='54' width='230' height='110' rx='18' fill='%23233c4e'/><rect x='88' y='8' width='162' height='72' rx='16' fill='%23314b5c'/><circle cx='55' cy='305' r='50' fill='%23080d12'/><circle cx='275' cy='305' r='50' fill='%23080d12'/><rect x='330' y='180' width='110' height='80' rx='16' fill='%23112735'/><text x='165' y='235' fill='%23dbe8f2' font-size='38' font-family='Arial' text-anchor='middle'>D4-300</text></g><g transform='translate(670 130)'><rect x='0' y='110' width='330' height='240' rx='30' fill='%231a303f'/><rect x='54' y='54' width='230' height='110' rx='18' fill='%23233c4e'/><rect x='88' y='8' width='162' height='72' rx='16' fill='%23314b5c'/><circle cx='55' cy='305' r='50' fill='%23080d12'/><circle cx='275' cy='305' r='50' fill='%23080d12'/><rect x='-110' y='180' width='110' height='80' rx='16' fill='%23112735'/><text x='165' y='235' fill='%23dbe8f2' font-size='38' font-family='Arial' text-anchor='middle'>D4-300</text></g><text x='600' y='90' fill='%2398b7cd' font-size='26' font-family='Arial' text-anchor='middle'>Twin Volvo Penta D4-300 · IPS400</text></svg>"/>
-        <div class="overlay-title"><b id="visualTitle">Motor- og systemstatus</b><small id="visualSub">Live summary · begge motorer</small></div>
-        <div class="metrics" id="metrics">
-          <div class="metric"><b>2 × normal</b><small>Motorstatus</small></div>
-          <div class="metric"><b>91 / 92°C</b><small>Temperatur</small></div>
-          <div class="metric"><b>13.2 V</b><small>Startbank</small></div>
-          <div class="metric"><b>Ingen</b><small>Aktive alarmer</small></div>
-        </div>
-      </div>
-
-      <aside class="card sidepanel">
-        <div class="kai-title"><h2 id="stateTitle">KAI · Normaltilstand</h2><span id="conf" class="badge good">Høj sikkerhed</span></div>
-        <div class="summary" id="summary">
-          Alt ser normalt ud. Begge D4-300 motorer er stabile, EVC har ingen aktiv fejlstatus, og der er ingen handling, der kræver din opmærksomhed nu.
-        </div>
-
-        <div class="section" id="evidenceSection">
-          <h4>Kilder / evidens</h4>
-          <div class="row"><span>Live motorstatus</span><span>aktuel</span></div>
-          <div class="row"><span>Servicehistorik</span><span>senest synk.</span></div>
-          <div class="row"><span>Volvo Penta materiale</span><span>tilgængeligt</span></div>
-        </div>
-
-        <div class="section" id="systemSection">
-          <h4>Systemer</h4>
-          <div class="row"><span>Fremdrift</span><span>Normal</span></div>
-          <div class="row"><span>Strøm</span><span>Normal</span></div>
-          <div class="row"><span>Navigation</span><span>Normal</span></div>
-        </div>
-
-        <div class="actions">
-          <button class="btn" onclick="openDoc()">Vis kilder</button>
-          <button class="btn primary" id="primaryAction" onclick="primaryAction()">Spørg KAI</button>
-        </div>
-      </aside>
-    </section>
-  </main>
-
-  <footer class="composer">
-    <div class="inputwrap"><span>✦</span><input id="q" placeholder="Spørg KAI om Shaka…" onkeydown="if(event.key==='Enter') sendQuestion()"/></div>
-    <div class="quick"><button onclick="setState('normal')">Status</button><button onclick="setState('trouble')">Fejlsøg</button><button onclick="setState('multi')">Sammenlign</button><button class="send" onclick="sendQuestion()">Send</button></div>
-  </footer>
+<aside class="sidebar"><div class="logo">KAI</div><button class="navbtn active" onclick="setState('normal')"><span>⌂</span>Hjem</button><button class="navbtn" onclick="setState('trouble')"><span>⚙</span>Motor</button><button class="navbtn" onclick="setState('multi')"><span>◫</span>Analyse</button><button class="navbtn" onclick="openDoc()"><span>▤</span>Dokument</button><button class="navbtn" onclick="setState('approval')"><span>✓</span>Approval</button></aside>
+<header class="header"><div class="brand"><div class="boat-thumb">🛥️</div><div><h1>S/Y Shaka · KAI</h1><p>Nord West 370 · Øresund · Generic Bot UI v0.2</p></div></div><div class="statusline"><div class="pill ok">● System normal</div><div class="pill">🌤 18°C · 4 m/s</div><div class="pill">🔋 82%</div></div></header>
+<main class="main">
+<section class="specialists">
+<div class="card spec focus" id="spec-penta" onclick="focusSpec('penta')"><div class="icon">⚙️</div><div><h3>PentaBot</h3><p>Volvo Penta · EVC · IPS</p></div><div class="ready">● klar</div></div>
+<div class="card spec" id="spec-økonomi" onclick="focusSpec('økonomi')"><div class="icon">▥</div><div><h3>RegnskabsBot</h3><p>Fakturaer · budget · omkostning</p></div><div class="ready">● klar</div></div>
+<div class="card spec" id="spec-dokument" onclick="focusSpec('dokument')"><div class="icon">▤</div><div><h3>DokumentBot</h3><p>Manualer · KO · EPC</p></div><div class="ready">● klar</div></div>
+<div class="card spec" id="spec-plan" onclick="focusSpec('plan')"><div class="icon">☑</div><div><h3>PlanlægningsBot</h3><p>Service · checklister · næste skridt</p></div><div class="ready">● klar</div></div>
+</section>
+<section class="workspace">
+<div class="card visual" id="visualPanel">
+<div class="engine-art"><div class="engines"><div class="engine"><b>D4-300</b><span>Bagbord · IPS400</span></div><div class="engine"><b>D4-300</b><span>Styrbord · IPS400</span></div></div></div>
+<div class="overlay-title"><b id="visualTitle">Motor- og systemstatus</b><small id="visualSub">Live summary · begge motorer</small></div>
+<div class="metrics" id="metrics"><div class="metric"><b>2 × normal</b><small>Motorstatus</small></div><div class="metric"><b>91 / 92°C</b><small>Temperatur</small></div><div class="metric"><b>13.2 V</b><small>Startbank</small></div><div class="metric"><b>Ingen</b><small>Aktive alarmer</small></div></div>
+<div class="doclayer" id="docLayer"><div class="dochead"><div><h3>Volvo Penta EVC / PCU — relevant kilde</h3><div class="docmeta">KAI dokumentvisning · samme sag · samme shell</div></div><button class="inlineclose" onclick="closeDoc()">Tilbage til visual</button></div><div class="docpage"><span class="evidence-tag">Dokumenteret historik</span><h3>PCU / EVC · bagbord motor</h3><p><b>Kilde:</b> autoriseret Volvo Penta materiale og servicehistorik.</p><p>PCU-stik på bagbord motor er tidligere registreret som rengjort/olieret og efterfølgende prøvekørt.</p><hr><p><b>KAI vurdering:</b> Historikken gør PCU-forbindelse og EVC-forsyning relevante at kontrollere ved en ny intermitterende no-start situation, men den dokumenterer ikke den aktuelle root cause.</p><p><b>Epistemisk status:</b> tidligere handling dokumenteret; nuværende årsag ikke bekræftet.</p><p><b>Kontekst:</b> KAI-konklusionen til højre forbliver synlig, mens kilden undersøges. Ingen separat app eller chat åbnes.</p></div></div>
 </div>
-
-<div class="modal" id="docModal">
-  <div class="modal-card">
-    <button class="btn close" onclick="closeModal()">Luk</button>
-    <h2>Dokument drill-down</h2>
-    <p style="color:#9fb4ca">Samme KAI-shell · detalje ved behov</p>
-    <div class="docbox">
-      <h3>Volvo Penta EVC / PCU — relevant kilde</h3>
-      <p><b>Kilde:</b> autoriseret Volvo Penta materiale + servicehistorik.</p>
-      <p>Dette panel simulerer manual/EPC/KO/faktura-visning. I den endelige prototype skal kilde, side, komponent og evidensstatus være synlige uden at brugeren forlader KAI.</p>
-      <hr/>
-      <p><b>Relateret historik:</b> PCU-stik på bagbord motor tidligere rengjort/olieret og prøvekørt.</p>
-      <p><b>Epistemisk status:</b> dokumenteret historik; nuværende årsag er ikke bekræftet.</p>
-    </div>
-  </div>
+<aside class="card sidepanel"><div class="kai-title"><h2 id="stateTitle">KAI · Normaltilstand</h2><span id="conf" class="badge good">Høj sikkerhed</span></div><div class="summary" id="summary">Alt ser normalt ud. Begge D4-300 motorer er stabile, EVC har ingen aktiv fejlstatus, og der er ingen handling, der kræver din opmærksomhed nu.</div><div class="section"><h4>Kilder / evidens</h4><div class="row"><span>Live motorstatus</span><span>aktuel</span></div><div class="row"><span>Servicehistorik</span><span>senest synk.</span></div><div class="row"><span>Volvo Penta materiale</span><span>tilgængeligt</span></div></div><div class="section"><h4>Systemer</h4><div class="row"><span>Fremdrift</span><span>Normal</span></div><div class="row"><span>Strøm</span><span>Normal</span></div><div class="row"><span>Navigation</span><span>Normal</span></div></div><div class="actions"><button class="btn" onclick="openDoc()">Vis kilder</button><button class="btn primary" id="primaryAction" onclick="primaryAction()">Spørg KAI</button></div></aside>
+</section></main>
+<footer class="composer"><div class="inputwrap"><span>✦</span><input id="q" placeholder="Spørg KAI om Shaka…" onkeydown="if(event.key==='Enter')sendQuestion()"/></div><div class="quick"><button onclick="setState('normal')">Status</button><button onclick="setState('trouble')">Fejlsøg</button><button onclick="setState('multi')">Sammenlign</button><button class="send" onclick="sendQuestion()">Send</button></div></footer>
 </div>
-
-<div class="modal" id="approvalModal">
-  <div class="modal-card">
-    <button class="btn close" onclick="closeApproval()">Luk</button>
-    <h2>KAI approval</h2>
-    <p style="color:#9fb4ca">Konsekvent handling kræver eksplicit godkendelse.</p>
-    <div class="card" style="padding:18px;margin:16px 0">
-      <div class="badge alert">Kræver godkendelse</div>
-      <h3>PlanlægningsBot vil oprette en serviceopgave</h3>
-      <p>“Kontrollér bagbord PCU-stik og EVC-forsyning ved næste værkstedsbesøg.”</p>
-      <p style="color:#9fb4ca">Ingen ekstern ændring sker, før du godkender.</p>
-    </div>
-    <div style="display:flex;gap:10px;justify-content:flex-end">
-      <button class="btn danger" onclick="approvalResult(false)">Afvis</button>
-      <button class="btn primary" onclick="approvalResult(true)">Tillad én gang</button>
-    </div>
-  </div>
-</div>
-
+<div class="modal" id="approvalModal"><div class="modal-card"><button class="btn" style="float:right" onclick="closeApproval()">Luk</button><h2>KAI approval</h2><p style="color:#9fb4ca">Konsekvent handling kræver eksplicit godkendelse.</p><div class="card" style="padding:18px;margin:16px 0"><div class="badge alert">Kræver godkendelse</div><h3>PlanlægningsBot vil oprette en serviceopgave</h3><p>Kontrollér bagbord PCU-stik og EVC-forsyning ved næste værkstedsbesøg.</p></div><div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" onclick="approvalResult(false)">Afvis</button><button class="btn primary" onclick="approvalResult(true)">Tillad én gang</button></div></div></div>
 <script>
-const states = {
-normal:{
- title:"KAI · Normaltilstand", conf:["Høj sikkerhed","good"], vtitle:"Motor- og systemstatus", vsub:"Live summary · begge motorer",
- summary:"Alt ser normalt ud. Begge D4-300 motorer er stabile, EVC har ingen aktiv fejlstatus, og der er ingen handling, der kræver din opmærksomhed nu.",
- metrics:[["2 × normal","Motorstatus"],["91 / 92°C","Temperatur"],["13.2 V","Startbank"],["Ingen","Aktive alarmer"]],
- action:"Spørg KAI"
-},
-trouble:{
- title:"KAI · Fejlsøgning", conf:["Under analyse","alert"], vtitle:"Bagbord D4-300 · EVC / PCU", vsub:"PentaBot fokuseret · simuleret fejlflow",
- summary:"Den intermitterende situation, hvor EVC er helt død ved nøgleaktivering, gør strøm-, jord- og forbindelsesvejen omkring PCU relevant at kontrollere først. Historikken dokumenterer arbejde på PCU-stikket, men beviser ikke, at det er den nuværende årsag.",
- metrics:[["Bagbord","Fokus"],["EVC","Subsystem"],["PCU","Relevant objekt"],["Ukendt","Root cause"]],
- action:"Vis fejlsøgningsplan"
-},
-multi:{
- title:"KAI · Multi-specialist", conf:["2 specialister","good"], vtitle:"Teknik + økonomi", vsub:"PentaBot og RegnskabsBot arbejder på samme sag",
- summary:"PentaBot forbinder sagen til tidligere PCU/EVC-arbejde. RegnskabsBot finder den relaterede servicepost og kan vise omkostningen. KAI samler begge bidrag i én konklusion i stedet for to separate chats.",
- metrics:[["PentaBot","Teknik"],["RegnskabsBot","Økonomi"],["1 sag","Fælles kontekst"],["Samlet","KAI-svar"]],
- action:"Vis samlet sag"
-},
-approval:{
- title:"KAI · Handling", conf:["Approval","alert"], vtitle:"Næste handling", vsub:"PlanlægningsBot · bruger godkender",
- summary:"KAI kan forberede næste servicehandling, men ingen ekstern ændring eller booking udføres automatisk. Du godkender først.",
- metrics:[["1","Forslag"],["0","Udført"],["Kræves","Godkendelse"],["KAI","Kontrol"]],
- action:"Åbn approval"
-}
-};
-
-function setState(name){
- const s=states[name];
- document.getElementById("stateTitle").textContent=s.title;
- const c=document.getElementById("conf"); c.textContent=s.conf[0]; c.className="badge "+s.conf[1];
- document.getElementById("visualTitle").textContent=s.vtitle;
- document.getElementById("visualSub").textContent=s.vsub;
- document.getElementById("summary").textContent=s.summary;
- const m=document.getElementById("metrics"); m.innerHTML=s.metrics.map(x=>`<div class="metric"><b>${x[0]}</b><small>${x[1]}</small></div>`).join("");
- document.getElementById("primaryAction").textContent=s.action;
- document.body.dataset.state=name;
- [...document.querySelectorAll(".spec")].forEach(x=>x.classList.remove("focus"));
- if(name==="trouble") document.getElementById("spec-penta").classList.add("focus");
- else if(name==="multi"){document.getElementById("spec-penta").classList.add("focus");document.getElementById("spec-økonomi").classList.add("focus")}
- else if(name==="approval") document.getElementById("spec-plan").classList.add("focus");
- else document.getElementById("spec-penta").classList.add("focus");
-}
-function focusSpec(id){
- [...document.querySelectorAll(".spec")].forEach(x=>x.classList.remove("focus"));
- document.getElementById("spec-"+id).classList.add("focus");
- if(id==="penta") setState("trouble");
- if(id==="økonomi") setState("multi");
- if(id==="dokument") openDoc();
- if(id==="plan") setState("approval");
-}
-function openDoc(){document.getElementById("docModal").classList.add("show")}
-function closeModal(){document.getElementById("docModal").classList.remove("show")}
-function closeApproval(){document.getElementById("approvalModal").classList.remove("show")}
-function primaryAction(){
- const st=document.body.dataset.state||"normal";
- if(st==="approval") document.getElementById("approvalModal").classList.add("show");
- else if(st==="trouble") openDoc();
- else if(st==="multi") openDoc();
- else document.getElementById("q").focus();
-}
-function sendQuestion(){
- const q=document.getElementById("q").value.trim().toLowerCase();
- if(q.includes("pcu")||q.includes("evc")||q.includes("motor")) setState("trouble");
- else if(q.includes("kost")||q.includes("faktura")||q.includes("pris")) setState("multi");
- else setState("normal");
- document.getElementById("q").value="";
-}
-function approvalResult(ok){
- closeApproval();
- document.getElementById("summary").textContent=ok
-  ? "Godkendt én gang. I en rigtig integration ville KAI nu udføre den specifikke tilladte handling og logge resultatet."
-  : "Handlingen blev afvist. Ingen ekstern ændring er udført.";
-}
-setState("normal");
+const states={normal:{title:'KAI · Normaltilstand',conf:['Høj sikkerhed','good'],vtitle:'Motor- og systemstatus',vsub:'Live summary · begge motorer',summary:'Alt ser normalt ud. Begge D4-300 motorer er stabile, EVC har ingen aktiv fejlstatus, og der er ingen handling, der kræver din opmærksomhed nu.',metrics:[['2 × normal','Motorstatus'],['91 / 92°C','Temperatur'],['13.2 V','Startbank'],['Ingen','Aktive alarmer']],action:'Spørg KAI'},trouble:{title:'KAI · Fejlsøgning',conf:['Under analyse','alert'],vtitle:'Bagbord D4-300 · EVC / PCU',vsub:'PentaBot fokuseret · simuleret fejlflow',summary:'Den intermitterende situation, hvor EVC er helt død ved nøgleaktivering, gør strøm-, jord- og forbindelsesvejen omkring PCU relevant at kontrollere først. Historikken dokumenterer arbejde på PCU-stikket, men beviser ikke, at det er den nuværende årsag.',metrics:[['Bagbord','Fokus'],['EVC','Subsystem'],['PCU','Relevant objekt'],['Ukendt','Root cause']],action:'Vis fejlsøgningsplan'},multi:{title:'KAI · Multi-specialist',conf:['2 specialister','good'],vtitle:'Teknik + økonomi',vsub:'PentaBot og RegnskabsBot arbejder på samme sag',summary:'PentaBot forbinder sagen til tidligere PCU/EVC-arbejde. RegnskabsBot finder den relaterede servicepost. KAI samler begge bidrag i én konklusion.',metrics:[['PentaBot','Teknik'],['RegnskabsBot','Økonomi'],['1 sag','Fælles kontekst'],['Samlet','KAI-svar']],action:'Vis samlet sag'},approval:{title:'KAI · Handling',conf:['Approval','alert'],vtitle:'Næste handling',vsub:'PlanlægningsBot · bruger godkender',summary:'KAI kan forberede næste servicehandling, men ingen ekstern ændring udføres automatisk. Du godkender først.',metrics:[['1','Forslag'],['0','Udført'],['Kræves','Godkendelse'],['KAI','Kontrol']],action:'Åbn approval'}};
+function setState(name){closeDoc();const s=states[name];document.getElementById('stateTitle').textContent=s.title;const c=document.getElementById('conf');c.textContent=s.conf[0];c.className='badge '+s.conf[1];document.getElementById('visualTitle').textContent=s.vtitle;document.getElementById('visualSub').textContent=s.vsub;document.getElementById('summary').textContent=s.summary;document.getElementById('metrics').innerHTML=s.metrics.map(x=>`<div class="metric"><b>${x[0]}</b><small>${x[1]}</small></div>`).join('');document.getElementById('primaryAction').textContent=s.action;document.body.dataset.state=name;document.querySelectorAll('.spec').forEach(x=>x.classList.remove('focus'));if(name==='trouble')document.getElementById('spec-penta').classList.add('focus');else if(name==='multi'){document.getElementById('spec-penta').classList.add('focus');document.getElementById('spec-økonomi').classList.add('focus')}else if(name==='approval')document.getElementById('spec-plan').classList.add('focus');else document.getElementById('spec-penta').classList.add('focus')}
+function focusSpec(id){document.querySelectorAll('.spec').forEach(x=>x.classList.remove('focus'));document.getElementById('spec-'+id).classList.add('focus');if(id==='penta')setState('trouble');if(id==='økonomi')setState('multi');if(id==='dokument')openDoc();if(id==='plan')setState('approval')}
+function openDoc(){document.getElementById('visualPanel').classList.add('docmode');document.getElementById('spec-dokument').classList.add('focus')}
+function closeDoc(){document.getElementById('visualPanel').classList.remove('docmode')}
+function closeApproval(){document.getElementById('approvalModal').classList.remove('show')}
+function primaryAction(){const st=document.body.dataset.state||'normal';if(st==='approval')document.getElementById('approvalModal').classList.add('show');else if(st==='trouble'||st==='multi')openDoc();else document.getElementById('q').focus()}
+function sendQuestion(){const q=document.getElementById('q').value.trim().toLowerCase();if(q.includes('pcu')||q.includes('evc')||q.includes('motor'))setState('trouble');else if(q.includes('kost')||q.includes('faktura')||q.includes('pris'))setState('multi');else setState('normal');document.getElementById('q').value=''}
+function approvalResult(ok){closeApproval();document.getElementById('summary').textContent=ok?'Godkendt én gang. I en rigtig integration ville KAI nu udføre den specifikke tilladte handling og logge resultatet.':'Handlingen blev afvist. Ingen ekstern ændring er udført.'}
+setState('normal');
 </script>
 </body>
 </html>
